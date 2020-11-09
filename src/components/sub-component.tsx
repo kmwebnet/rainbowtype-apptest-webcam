@@ -10,10 +10,7 @@ function SubComponent() {
   ws.current.binaryType = 'arraybuffer';
 
   const [frame, setframe] = useState<string> ('');
-  const handleClick = () => {
-    console.log('クリックされました');
-    ws.current.send('data sent.');
-  }
+
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
         if (ev.data != '') {
@@ -29,7 +26,6 @@ function SubComponent() {
       <div>
         <h2>{window.location.host}</h2>
         <img src={frame}/>
-        <button onClick={handleClick}>Add +1</button>
       </div>
     );
 }

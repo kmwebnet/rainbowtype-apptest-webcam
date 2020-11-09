@@ -40,7 +40,6 @@ app.get('/app/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 });
 
-/*
 function keepAlive(ws: ws) {
   setTimeout(() => {
     if (ws.readyState === 1) {
@@ -49,7 +48,6 @@ function keepAlive(ws: ws) {
     keepAlive(ws);
   }, 3000);
 }
-*/
 
 // express-ws websocket
 app.ws('/ws', function (ws, req) {
@@ -62,7 +60,7 @@ app.ws('/ws', function (ws, req) {
 
   connections.add(tws);
 
-  // keepAlive(tws);
+  keepAlive(tws);
 
   ws.on('message', function (msg) {
     // get self ID
@@ -71,7 +69,7 @@ app.ws('/ws', function (ws, req) {
     // send message except me (non JSON data)
     connections.forEach(function (client) {
       if (client.id !== cid) {
-        console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
+        // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
         client.send(msg);
       }
     });

@@ -32,30 +32,28 @@ app.use('/app', express_1.default.static(__dirname + '/dist'));
 app.get('/app/*', function (req, res) {
     res.sendFile(path_1.default.join(__dirname, 'dist', 'index.html'));
 });
-/*
-function keepAlive(ws: ws) {
-  setTimeout(() => {
-    if (ws.readyState === 1) {
-      ws.send('');
-    }
-    keepAlive(ws);
-  }, 3000);
+function keepAlive(ws) {
+    setTimeout(() => {
+        if (ws.readyState === 1) {
+            ws.send('');
+        }
+        keepAlive(ws);
+    }, 3000);
 }
-*/
 // express-ws websocket
 app.ws('/ws', function (ws, req) {
     console.log('connect:' + req.socket.getPeerCertificate(true).subject.CN);
     const tws = ws;
     tws.id = req.socket.getPeerCertificate(true).subject.CN;
     connections.add(tws);
-    // keepAlive(tws);
+    keepAlive(tws);
     ws.on('message', function (msg) {
         // get self ID
         const cid = req.socket.getPeerCertificate(true).subject.CN;
         // send message except me (non JSON data)
         connections.forEach(function (client) {
             if (client.id !== cid) {
-                console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
+                // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
                 client.send(msg);
             }
         });
