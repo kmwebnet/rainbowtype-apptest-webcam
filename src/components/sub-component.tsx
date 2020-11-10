@@ -7,16 +7,17 @@ function SubComponent() {
 
   const wsUrl = 'wss://' + window.location.host + '/ws';
   const ws = useRef(new WebSocket(wsUrl));
+  const imgref = useRef<HTMLImageElement>(null);
   ws.current.binaryType = 'arraybuffer';
-
-  const [frame, setframe] = useState<string> ('');
 
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
         if (ev.data != '') {
           const ab = ev.data; 
           const bytes = new Uint8Array(ab);
-            setframe('data:image/jpg;base64,' + window.btoa(String.fromCharCode(...bytes)));
+          if (imgref.current) {
+            imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...bytes));
+          }
         };
     }
   });
@@ -25,7 +26,7 @@ function SubComponent() {
     return (
       <div>
         <h2>{window.location.host}</h2>
-        <img src={frame}/>
+        <img ref={imgref} src=""/>
       </div>
     );
 }

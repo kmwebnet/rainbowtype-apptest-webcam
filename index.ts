@@ -62,6 +62,8 @@ app.ws('/ws', function (ws, req) {
 
   keepAlive(tws);
 
+  console.log('connections:' + connections.size);
+
   ws.on('message', function (msg) {
     // get self ID
     const cid = (req.socket as TLSSocket).getPeerCertificate(true).subject.CN;
