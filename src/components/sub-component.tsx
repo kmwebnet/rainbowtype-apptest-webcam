@@ -16,6 +16,7 @@ function SubComponent() {
           if (imgref.current) {
             imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...new Uint8Array(ev.data)));
           }
+          console.log (ev.data.byteLength);
         };
     }
   }, [imgref]);
