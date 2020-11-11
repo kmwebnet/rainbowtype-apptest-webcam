@@ -14,9 +14,8 @@ function SubComponent() {
     ws.current.onmessage = (ev: MessageEvent) => {
         if (ev.data != '') {
           if (imgref.current) {
-            imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...new Uint8Array(ev.data)));
+              imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...new Uint8Array(ev.data)));
           }
-          console.log (ev.data.byteLength);
         };
     }
   }, []);
