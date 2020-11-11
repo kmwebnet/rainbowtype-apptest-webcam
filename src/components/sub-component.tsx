@@ -13,14 +13,12 @@ function SubComponent() {
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
         if (ev.data != '') {
-          const ab = ev.data; 
-          const bytes = new Uint8Array(ab);
           if (imgref.current) {
-            imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...bytes));
+            imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...new Uint8Array(ev.data)));
           }
         };
     }
-  });
+  }, [imgref]);
   useEffect(() => () => ws.current.close(), [ws]) ; 
   
     return (
