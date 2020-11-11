@@ -19,7 +19,7 @@ function SubComponent() {
           console.log (ev.data.byteLength);
         };
     }
-  }, [imgref]);
+  }, []);
   useEffect(() => () => ws.current.close(), [ws]) ; 
   
     return (
