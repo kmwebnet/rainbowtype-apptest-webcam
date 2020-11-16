@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { useEffect, useRef } from 'react';
-import 'xterm/css/xterm.css';
-
 
 function SubComponent() {
 
@@ -13,7 +11,7 @@ function SubComponent() {
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
         if (ev.data != '') {
-          if (imgref.current) {
+          if (imgref.current && imgref.current.complete) {
               imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...new Uint8Array(ev.data)));
           }
         };
