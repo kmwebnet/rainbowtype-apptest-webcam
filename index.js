@@ -47,7 +47,6 @@ app.ws('/ws', function (ws, req) {
     tws.id = req.socket.getPeerCertificate(true).subject.CN;
     connections.add(tws);
     keepAlive(tws);
-    console.log('connections:' + connections.size);
     ws.on('message', function (msg) {
         // get self ID
         const cid = req.socket.getPeerCertificate(true).subject.CN;
@@ -55,7 +54,7 @@ app.ws('/ws', function (ws, req) {
         connections.forEach(function (client) {
             if (client.id !== cid) {
                 // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
-                client.send(msg);
+                client.send(msg + cid);
             }
         });
     });
