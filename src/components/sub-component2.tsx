@@ -12,6 +12,7 @@ function SubComponent2() {
     ws.current.onmessage = (ev: MessageEvent) => {
       if (ev.data) {
         const tserial: string = ev.data.slice(-18).toString();
+        console.log(tserial);
         if (tserial.slice(0, 4) === '0123') {
           if (!serial.some((e) => e === tserial)) {
             const sserial: string[] = [...serial, tserial];
