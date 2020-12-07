@@ -36,8 +36,8 @@ const connections = new Set<tws>();
 
 // app
 app.use('/app', express.static(__dirname + '/dist'));
-app.get('/app/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+app.get('/app/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 function keepAlive(ws: ws) {
@@ -70,7 +70,8 @@ app.ws('/ws', function (ws, req) {
     connections.forEach(function (client) {
       if (client.id !== cid) {
         // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
-        client.send(msg + cid);
+        //client.send(msg + cid);
+        client.send(msg);
       }
     });
   });

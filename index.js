@@ -54,7 +54,8 @@ app.ws('/ws', function (ws, req) {
         connections.forEach(function (client) {
             if (client.id !== cid) {
                 // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
-                client.send(msg + cid);
+                //client.send(msg + cid);
+                client.send(msg);
             }
         });
     });
