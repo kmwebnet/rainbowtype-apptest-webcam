@@ -21,8 +21,9 @@ function SubComponent2() {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
             setslen(serial.length);
-            setser(serial);
-            console.log('slen:' + slen);
+            const nserial = serial;
+            setser(nserial);
+
             //imgref.current.push(createRef());
           }
           const idx = serial.indexOf(tserial);
@@ -43,6 +44,7 @@ function SubComponent2() {
 
   useEffect(() => {
     imgref.current = new Array(slen);
+    console.log('slen:' + slen);
   }, [slen]);
 
   return (
@@ -55,7 +57,7 @@ function SubComponent2() {
             ref={(el) => (imgref.current[i] = el as HTMLImageElement)}
             src=""
           />
-          CAMERA{i}
+          CAMERA{i} {v}
         </div>
       ))}
     </div>
