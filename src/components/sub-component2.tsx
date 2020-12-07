@@ -21,6 +21,9 @@ function SubComponent2() {
           }
           const idx = serial.indexOf(tserial);
           console.log(idx);
+          if (imgref.current[idx].current) {
+            console.log(imgref.current[idx].current?.src);
+          }
           /*
           if (imgref.current[idx] === null) return;
           if (imgref.current[idx].current === null) return;
