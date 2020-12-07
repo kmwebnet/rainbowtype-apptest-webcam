@@ -17,7 +17,7 @@ function SubComponent2() {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
             imgref.current.push(React.createRef<HTMLImageElement>());
-            console.log(serial[0]);
+            console.log('serial0 :' + serial[0]);
           }
           const idx = serial.indexOf(tserial);
           console.log(idx);
