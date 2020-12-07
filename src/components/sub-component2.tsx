@@ -7,6 +7,7 @@ function SubComponent2() {
   ws.current.binaryType = 'arraybuffer';
   const imgref = useRef<Array<React.RefObject<HTMLImageElement>>>([]);
   const serial: string[] = [];
+  const slen = serial.length;
 
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
@@ -23,20 +24,14 @@ function SubComponent2() {
           if (imgref.current[idx]) {
             console.log(imgref.current[idx].current?.complete);
           }
-          /*
-          if (imgref.current[idx] === null) return;
-          if (!imgref.current[idx]) return;
-          if (!imgref.current[idx].src) return;
-          if (!imgref.current[idx].complete) return;
-
-          if (imgref.current[idx] && imgref.current[idx].complete) {
-            imgref.current[idx].src =
+          const cref = imgref.current[idx].current;
+          if (cref && cref.complete) {
+            cref.src =
               'data:image/jpg;base64,' +
               window.btoa(
                 String.fromCharCode(...new Uint8Array(ev.data.slice(0, -18)))
               );
           }
-          */
         }
       }
     };
@@ -44,10 +39,10 @@ function SubComponent2() {
   useEffect(() => () => ws.current.close(), [ws]);
 
   useEffect(() => {
-    imgref.current = Array(serial.length)
+    imgref.current = Array(slen)
       .fill(0)
       .map((_, i) => imgref.current[i] || createRef());
-  }, [serial]);
+  }, [slen]);
 
   return (
     <div>
