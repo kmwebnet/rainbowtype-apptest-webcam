@@ -7,6 +7,7 @@ function SubComponent2() {
   ws.current.binaryType = 'arraybuffer';
   const imgref = useRef<Array<HTMLImageElement>>([]);
   const serial: string[] = [];
+  const [ser, setser] = useState<string[]>([]);
   const [slen, setslen] = useState<number>(0);
 
   useEffect(() => {
@@ -20,6 +21,8 @@ function SubComponent2() {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
             setslen(serial.length);
+            setser(serial);
+            console.log('slen:' + slen);
             //imgref.current.push(createRef());
           }
           const idx = serial.indexOf(tserial);
@@ -45,7 +48,7 @@ function SubComponent2() {
   return (
     <div>
       <h2>{window.location.host}</h2>
-      {serial.map((v, i) => (
+      {ser.map((v, i) => (
         <div key={v}>
           <img
             key={v}
