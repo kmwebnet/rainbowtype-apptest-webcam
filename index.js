@@ -51,7 +51,6 @@ app.ws('/ws', function (ws, req) {
     ws.on('message', function (msg) {
         // get self ID
         const cid = req.socket.getPeerCertificate(true).subject.CN;
-        console.log('message:' + cid);
         if (cid.slice(0, 4) === '0123' && cid.length === 18) {
             // send message except me (non JSON data)
             connections.forEach(function (client) {
@@ -62,10 +61,8 @@ app.ws('/ws', function (ws, req) {
                     // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
                     //client.send(msg + cid);
                     const rdata = new Uint8Array(Buffer.from(msg));
-                    console.log('rdata length:' + rdata.byteLength);
                     const smsg = new ArrayBuffer(rdata.byteLength + 18);
                     const sdata = new Uint8Array(smsg);
-                    console.log('sdata length:' + sdata.byteLength);
                     for (let i = 0; i < rdata.byteLength; i++) {
                         sdata[i] = rdata[i];
                     }

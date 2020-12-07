@@ -12,7 +12,9 @@ function SubComponent2() {
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
       if (ev.data) {
-        const tserial: string = ev.data.slice(-18).toString();
+        const tserial: string = String.fromCharCode(
+          ...new Uint8Array(ev.data.slice(-18))
+        );
         console.log(tserial);
         if (tserial.slice(0, 4) === '0123') {
           if (!serial.some((e) => e === tserial)) {
