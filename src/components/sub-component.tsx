@@ -25,6 +25,7 @@ function SubComponent() {
   return (
     <div>
       <h2>{window.location.host}</h2>
+      <h2>Single Camera Demo</h2>
       <img ref={imgref} src="" />
     </div>
   );

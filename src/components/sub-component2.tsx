@@ -8,7 +8,6 @@ function SubComponent2() {
   const imgref = useRef<Array<HTMLImageElement>>([]);
   const serial: string[] = [];
   const [ser, setser] = useState<string[]>([]);
-  const [slen, setslen] = useState<number>(0);
 
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
@@ -20,7 +19,6 @@ function SubComponent2() {
         if (tserial.slice(0, 4) === '0123') {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
-            setslen(serial.length);
             const nserial = serial;
             setser(nserial);
             imgref.current.push();
@@ -42,16 +40,10 @@ function SubComponent2() {
   }, []);
   useEffect(() => () => ws.current.close(), [ws]);
 
-  /*
-  useEffect(() => {
-    imgref.current = new Array(slen);
-    console.log('slen:' + slen);
-  }, [slen]);
-  */
-
   return (
     <div>
       <h2>{window.location.host}</h2>
+      <h2>Multi Camera Demo</h2>
       {ser.map((v, i) => (
         <div key={v}>
           <img
@@ -59,7 +51,9 @@ function SubComponent2() {
             ref={(el) => (imgref.current[i] = el as HTMLImageElement)}
             src=""
           />
-          CAMERA{i} {v}
+          <h2 key={v}>
+            CAMERA{i} {v}
+          </h2>
         </div>
       ))}
     </div>
