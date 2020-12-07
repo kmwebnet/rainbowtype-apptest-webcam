@@ -66,20 +66,28 @@ app.ws('/ws', function (ws, req) {
     // get self ID
     const cid = (req.socket as TLSSocket).getPeerCertificate(true).subject.CN;
 
-    // send message except me (non JSON data)
-    connections.forEach(function (client) {
-      if (client.id !== cid) {
-        // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
-        //client.send(msg + cid);
-        const rdata = new DataView(msg as ArrayBuffer);
-        const smsg = new ArrayBuffer(rdata.byteLength + 18);
-        const sdata = new DataView(smsg);
-        for (let i = 0; i < 18; i++) {
-          sdata.setUint8(rdata.byteLength + i, cid.charCodeAt(i));
+    if (cid.slice(0, 4) === '0123' && cid.length === 18) {
+      // send message except me (non JSON data)
+      connections.forEach(function (client) {
+        if (
+          client.id !== cid &&
+          client.id?.slice(0, 4) !== '0123' &&
+          client.id?.length === 18
+        ) {
+          // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
+          //client.send(msg + cid);
+          const rdata = new DataView(msg as ArrayBuffer);
+          console.log('rdata length:' + rdata.byteLength);
+          const smsg = new ArrayBuffer(rdata.byteLength + 18);
+          const sdata = new DataView(smsg);
+          console.log('sdata length:' + sdata.byteLength);
+          for (let i = 0; i < 18; i++) {
+            sdata.setUint8(rdata.byteLength + i, cid.charCodeAt(i));
+          }
+          client.send(smsg);
         }
-        client.send(smsg);
-      }
-    });
+      });
+    }
   });
 
   ws.on('close', () => {

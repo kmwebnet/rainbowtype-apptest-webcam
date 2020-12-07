@@ -50,20 +50,27 @@ app.ws('/ws', function (ws, req) {
     ws.on('message', function (msg) {
         // get self ID
         const cid = req.socket.getPeerCertificate(true).subject.CN;
-        // send message except me (non JSON data)
-        connections.forEach(function (client) {
-            if (client.id !== cid) {
-                // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
-                //client.send(msg + cid);
-                const rdata = new DataView(msg);
-                const smsg = new ArrayBuffer(rdata.byteLength + 18);
-                const sdata = new DataView(smsg);
-                for (let i = 0; i < 18; i++) {
-                    sdata.setUint8(rdata.byteLength + i, cid.charCodeAt(i));
+        if (cid.slice(0, 4) === '0123' && cid.length === 18) {
+            // send message except me (non JSON data)
+            connections.forEach(function (client) {
+                var _a, _b;
+                if (client.id !== cid &&
+                    ((_a = client.id) === null || _a === void 0 ? void 0 : _a.slice(0, 4)) !== '0123' &&
+                    ((_b = client.id) === null || _b === void 0 ? void 0 : _b.length) === 18) {
+                    // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
+                    //client.send(msg + cid);
+                    const rdata = new DataView(msg);
+                    console.log('rdata length:' + rdata.byteLength);
+                    const smsg = new ArrayBuffer(rdata.byteLength + 18);
+                    const sdata = new DataView(smsg);
+                    console.log('sdata length:' + sdata.byteLength);
+                    for (let i = 0; i < 18; i++) {
+                        sdata.setUint8(rdata.byteLength + i, cid.charCodeAt(i));
+                    }
+                    client.send(smsg);
                 }
-                client.send(smsg);
-            }
-        });
+            });
+        }
     });
     ws.on('close', () => {
         // The closed connection is removed from the set
