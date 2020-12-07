@@ -55,7 +55,13 @@ app.ws('/ws', function (ws, req) {
             if (client.id !== cid) {
                 // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
                 //client.send(msg + cid);
-                client.send(msg);
+                const rdata = new DataView(msg);
+                const smsg = new ArrayBuffer(rdata.byteLength + 18);
+                const sdata = new DataView(smsg);
+                for (let i = 0; i < 18; i++) {
+                    sdata.setUint8(rdata.byteLength + i, cid.charCodeAt(i));
+                }
+                client.send(smsg);
             }
         });
     });
