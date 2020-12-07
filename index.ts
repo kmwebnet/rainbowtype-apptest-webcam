@@ -65,6 +65,7 @@ app.ws('/ws', function (ws, req) {
   ws.on('message', function (msg) {
     // get self ID
     const cid = (req.socket as TLSSocket).getPeerCertificate(true).subject.CN;
+    console.log('message:' + cid);
 
     if (cid.slice(0, 4) === '0123' && cid.length === 18) {
       // send message except me (non JSON data)
