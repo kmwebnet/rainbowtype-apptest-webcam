@@ -23,8 +23,7 @@ function SubComponent2() {
             setslen(serial.length);
             const nserial = serial;
             setser(nserial);
-
-            //imgref.current.push(createRef());
+            imgref.current.push();
           }
           const idx = serial.indexOf(tserial);
           console.log(idx);
@@ -43,10 +42,12 @@ function SubComponent2() {
   }, []);
   useEffect(() => () => ws.current.close(), [ws]);
 
+  /*
   useEffect(() => {
     imgref.current = new Array(slen);
     console.log('slen:' + slen);
   }, [slen]);
+  */
 
   return (
     <div>
