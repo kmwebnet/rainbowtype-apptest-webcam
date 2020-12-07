@@ -19,12 +19,13 @@ function SubComponent2() {
         if (tserial.slice(0, 4) === '0123') {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
-            imgref.current.push();
+            imgref.current.push(new Image());
             const nserial = serial;
             setser(nserial);
           }
           const idx = serial.indexOf(tserial);
           console.log(idx);
+          console.log('length:' + serial.length);
           console.log(imgref.current);
           const cref = imgref.current[idx];
           if (cref && cref.complete) {
