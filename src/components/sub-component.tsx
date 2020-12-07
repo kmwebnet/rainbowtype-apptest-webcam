@@ -2,7 +2,6 @@
 import React, { useEffect, useRef } from 'react';
 
 function SubComponent() {
-
   const wsUrl = 'wss://' + window.location.host + '/ws';
   const ws = useRef(new WebSocket(wsUrl));
   const imgref = useRef<HTMLImageElement>(null);
@@ -10,21 +9,25 @@ function SubComponent() {
 
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
-        if (ev.data != '') {
-          if (imgref.current && imgref.current.complete) {
-              imgref.current.src = 'data:image/jpg;base64,' + window.btoa(String.fromCharCode(...new Uint8Array(ev.data)));
-          }
-        };
-    }
+      if (ev.data != '') {
+        if (imgref.current && imgref.current.complete) {
+          imgref.current.src =
+            'data:image/jpg;base64,' +
+            window.btoa(
+              String.fromCharCode(...new Uint8Array(ev.data.slice(0, -18)))
+            );
+        }
+      }
+    };
   }, []);
-  useEffect(() => () => ws.current.close(), [ws]) ; 
-  
-    return (
-      <div>
-        <h2>{window.location.host}</h2>
-        <img ref={imgref} src=""/>
-      </div>
-    );
+  useEffect(() => () => ws.current.close(), [ws]);
+
+  return (
+    <div>
+      <h2>{window.location.host}</h2>
+      <img ref={imgref} src="" />
+    </div>
+  );
 }
 
 export default SubComponent;
