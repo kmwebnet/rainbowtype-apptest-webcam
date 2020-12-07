@@ -6,7 +6,7 @@ function SubComponent2() {
   const ws = useRef(new WebSocket(wsUrl));
   ws.current.binaryType = 'arraybuffer';
   const imgref = useRef<React.RefObject<HTMLImageElement>[]>([]);
-  const [serial, setserial] = useState<string[]>([]);
+  const serial: string[] = [];
 
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
@@ -15,8 +15,7 @@ function SubComponent2() {
         console.log(tserial);
         if (tserial.slice(0, 4) === '0123') {
           if (!serial.some((e) => e === tserial)) {
-            const sserial: string[] = [...serial, tserial];
-            setserial(sserial);
+            serial.push(tserial);
             imgref.current.push(React.createRef<HTMLImageElement>());
             console.log(serial[0]);
           }
