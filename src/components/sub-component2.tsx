@@ -7,7 +7,7 @@ function SubComponent2() {
   ws.current.binaryType = 'arraybuffer';
   const imgref = useRef<Array<React.RefObject<HTMLImageElement>>>([]);
   const serial: string[] = [];
-  const slen = serial.length;
+  const [slen, setslen] = useState<number>(0);
 
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
@@ -17,13 +17,11 @@ function SubComponent2() {
         if (tserial.slice(0, 4) === '0123') {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
-            imgref.current.push(createRef());
+            setslen(serial.length);
+            //imgref.current.push(createRef());
           }
           const idx = serial.indexOf(tserial);
           console.log(idx);
-          if (imgref.current[idx]) {
-            console.log(imgref.current[idx].current?.complete);
-          }
           const cref = imgref.current[idx].current;
           if (cref && cref.complete) {
             cref.src =
