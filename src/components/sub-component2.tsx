@@ -26,7 +26,7 @@ function SubComponent2() {
 
             //imgref.current.push(createRef());
           }
-          const idx = serial.indexOf(tserial);
+          const idx = serial.indexOf(tserial) - 1;
           console.log(idx);
           const cref = imgref.current[idx];
           if (cref && cref.complete) {
