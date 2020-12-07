@@ -19,9 +19,9 @@ function SubComponent2() {
         if (tserial.slice(0, 4) === '0123') {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
+            imgref.current.push();
             const nserial = serial;
             setser(nserial);
-            imgref.current.push();
           }
           const idx = serial.indexOf(tserial);
           console.log(idx);
