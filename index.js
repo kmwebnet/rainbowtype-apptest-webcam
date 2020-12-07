@@ -61,13 +61,16 @@ app.ws('/ws', function (ws, req) {
                     ((_b = client.id) === null || _b === void 0 ? void 0 : _b.length) !== 18) {
                     // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
                     //client.send(msg + cid);
-                    const rdata = new DataView(msg);
+                    const rdata = new Uint8Array(Buffer.from(msg));
                     console.log('rdata length:' + rdata.byteLength);
                     const smsg = new ArrayBuffer(rdata.byteLength + 18);
-                    const sdata = new DataView(smsg);
+                    const sdata = new Uint8Array(smsg);
                     console.log('sdata length:' + sdata.byteLength);
+                    for (let i = 0; i < rdata.byteLength; i++) {
+                        sdata[i] = rdata[i];
+                    }
                     for (let i = 0; i < 18; i++) {
-                        sdata.setUint8(rdata.byteLength + i, cid.charCodeAt(i));
+                        sdata[rdata.byteLength + i] = cid.charCodeAt(i);
                     }
                     client.send(smsg);
                 }
