@@ -47,6 +47,7 @@ app.ws('/ws', function (ws, req) {
     tws.id = req.socket.getPeerCertificate(true).subject.CN;
     connections.add(tws);
     keepAlive(tws);
+    // recieve message and routing
     ws.on('message', function (msg) {
         // get self ID
         const cid = req.socket.getPeerCertificate(true).subject.CN;
@@ -57,7 +58,7 @@ app.ws('/ws', function (ws, req) {
                 var _a, _b;
                 if (client.id !== cid &&
                     ((_a = client.id) === null || _a === void 0 ? void 0 : _a.slice(0, 4)) !== '0123' &&
-                    ((_b = client.id) === null || _b === void 0 ? void 0 : _b.length) === 18) {
+                    ((_b = client.id) === null || _b === void 0 ? void 0 : _b.length) !== 18) {
                     // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
                     //client.send(msg + cid);
                     const rdata = new DataView(msg);

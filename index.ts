@@ -62,6 +62,7 @@ app.ws('/ws', function (ws, req) {
 
   keepAlive(tws);
 
+  // recieve message and routing
   ws.on('message', function (msg) {
     // get self ID
     const cid = (req.socket as TLSSocket).getPeerCertificate(true).subject.CN;
@@ -73,7 +74,7 @@ app.ws('/ws', function (ws, req) {
         if (
           client.id !== cid &&
           client.id?.slice(0, 4) !== '0123' &&
-          client.id?.length === 18
+          client.id?.length !== 18
         ) {
           // console.log(cid + ' sent to ' + client.id + ' message: ' + msg);
           //client.send(msg + cid);
