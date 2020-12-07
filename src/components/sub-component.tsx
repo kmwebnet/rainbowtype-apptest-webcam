@@ -10,6 +10,7 @@ function SubComponent() {
   useEffect(() => {
     ws.current.onmessage = (ev: MessageEvent) => {
       if (ev.data != '') {
+        console.log(ev.data.length);
         if (imgref.current && imgref.current.complete) {
           imgref.current.src =
             'data:image/jpg;base64,' +
