@@ -48,7 +48,7 @@ function SubComponent2() {
     <div>
       <h2>{window.location.host}</h2>
       <h2>Multi Camera Demo</h2>
-      {ser.map((v, i) => (
+      {serial.map((v, i) => (
         <div key={v}>
           <img
             key={v}
