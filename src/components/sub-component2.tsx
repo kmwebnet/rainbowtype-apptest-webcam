@@ -20,7 +20,7 @@ function SubComponent2() {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
             imgref.current.push(new Image());
-            const nserial = serial;
+            const nserial = [...ser, tserial];
             setser(nserial);
           }
           const idx = serial.indexOf(tserial);
@@ -48,7 +48,7 @@ function SubComponent2() {
     <div>
       <h2>{window.location.host}</h2>
       <h2>Multi Camera Demo</h2>
-      {serial.map((v, i) => (
+      {ser.map((v, i) => (
         <div key={v}>
           <img
             key={v}
