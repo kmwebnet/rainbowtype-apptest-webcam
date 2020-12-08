@@ -20,8 +20,7 @@ function SubComponent2() {
           if (!serial.some((e) => e === tserial)) {
             serial.push(tserial);
             imgref.current.push(new Image());
-            const nserial = [...ser, tserial];
-            setser(nserial);
+            setser((ser) => [...ser, tserial]);
           }
           const idx = serial.indexOf(tserial);
           console.log(idx);
