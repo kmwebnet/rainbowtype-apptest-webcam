@@ -6,7 +6,6 @@ function SubComponent2() {
   const ws = useRef(new WebSocket(wsUrl));
   ws.current.binaryType = 'arraybuffer';
   const imgref = useRef<Array<HTMLImageElement>>([]);
-  const serial: string[] = [];
   const [ser, setser] = useState<string[]>([]);
 
   useEffect(() => {
@@ -17,18 +16,11 @@ function SubComponent2() {
         );
         console.log(tserial);
         if (tserial.slice(0, 4) === '0123') {
-          if (!serial.some((e) => e === tserial)) {
-            serial.push(tserial);
+          if (!ser.some((e) => e === tserial)) {
             imgref.current.push(new Image());
             setser((ser) => [...ser, tserial]);
           }
-          const idx = serial.indexOf(tserial);
-          console.log(idx);
-          console.log('length:' + serial.length);
-          console.log(
-            'index' + idx + 'value:' + serial[idx] + 'state:' + ser[idx]
-          );
-          console.log(imgref.current);
+          const idx = ser.indexOf(tserial);
           const cref = imgref.current[idx];
           if (cref && cref.complete) {
             cref.src =
