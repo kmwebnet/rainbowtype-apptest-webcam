@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-around',
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
+      paddingTop: '3em',
     },
     gridList: {
       width: 500,
@@ -92,10 +93,12 @@ function SubComponent2() {
         {ser.map((v, i) => (
           <GridListTile key={v}>
             <img
+              key={v}
               ref={(el) => (imgref.current[i] = el as HTMLImageElement)}
               src=""
             />
             <GridListTileBar
+              key={v}
               title={`CAMERA ${i} ${v}`}
               className={classes.titleBar}
             />
