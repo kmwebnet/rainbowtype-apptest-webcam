@@ -20,32 +20,6 @@ SOFTWARE.
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React, { useState, useEffect, useRef } from 'react';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      overflow: 'hidden',
-      backgroundColor: theme.palette.background.paper,
-      paddingTop: '3em',
-    },
-    gridList: {
-      width: 500,
-      height: 450,
-    },
-    titleBar: {
-      background:
-        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-    },
-  })
-);
 
 function SubComponent2() {
   const wsUrl = 'wss://' + window.location.host + '/ws';
@@ -82,29 +56,22 @@ function SubComponent2() {
   }, []);
   useEffect(() => () => ws.current.close(), [ws]);
 
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">Multi Camera Demo</ListSubheader>
-        </GridListTile>
-        {ser.map((v, i) => (
-          <GridListTile key={v}>
-            <img
-              key={v}
-              ref={(el) => (imgref.current[i] = el as HTMLImageElement)}
-              src=""
-            />
-            <GridListTileBar
-              key={v}
-              title={`CAMERA ${i} ${v}`}
-              className={classes.titleBar}
-            />
-          </GridListTile>
-        ))}
-      </GridList>
+    <div>
+      <h2>{window.location.host}</h2>
+      <h2>Multi Camera Demo</h2>
+      {ser.map((v, i) => (
+        <div key={v}>
+          <img
+            key={v}
+            ref={(el) => (imgref.current[i] = el as HTMLImageElement)}
+            src=""
+          />
+          <h2 key={v}>
+            CAMERA{i} {v}
+          </h2>
+        </div>
+      ))}
     </div>
   );
 }
